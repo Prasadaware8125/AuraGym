@@ -45,8 +45,7 @@ app.get("/admin/:userID", (req,res) => {
 // });
 
 app.post("/user/dashboard", (req, res) => {
-    let {name, email} = req.body;
-    res.render("dashboard", {name});
+    res.render("member");
 })
 
 app.get("/user/:userId/workout", (req,res) => {
