@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA GYM | Member Dashboard</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/member.css">
+    
+    <!-- Script -->
+    <script src="/js/member.js" defer></script>
+</head>
+<body>
+
+    <div id="member-app">
+        
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <i class="fa-solid fa-bolt"></i> AURA<span>GYM</span>
+                </a>
+            </div>
+
+            <nav class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="#dashboard-overview" class="nav-link active" data-target="dashboard-overview">
+                            <i class="fa-solid fa-grid-2"></i>
+                            <span>Overview</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#workouts" class="nav-link" data-target="workouts">
+                            <i class="fa-solid fa-dumbbell"></i>
+                            <span>Workouts</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#nutrition" class="nav-link" data-target="nutrition">
+                            <i class="fa-solid fa-utensils"></i>
+                            <span>Nutrition</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#schedule" class="nav-link" data-target="schedule">
+                            <i class="fa-solid fa-calendar-day"></i>
+                            <span>Schedule</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#progress" class="nav-link" data-target="progress">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <span>Progress</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#profile" class="nav-link" data-target="profile">
+                            <i class="fa-solid fa-user"></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#settings" class="nav-link" data-target="settings">
+                            <i class="fa-solid fa-gear"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <form action="/" method="GET">
+                <div class="sidebar-footer">
+                    <button id="logout-btn">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Log Out</span>
+                    </button>
+                </div>
+            </form>
+        </aside>
+
+        <!-- Main Content Wrapper -->
+        <div id="main-wrapper">
+            
+            <!-- Top Navbar -->
+            <header id="top-navbar">
+                <button id="sidebar-toggle"><i class="fa-solid fa-bars"></i></button>
+                
+                <div class="page-title">
+                    <h2 id="current-page-title">Overview</h2>
+                </div>
+
+                <div class="user-menu">
+                    <div class="user-info">
+                        <span class="user-name">Loading...</span>
+                        <span class="user-role">Member</span>
+                    </div>
+                    <div class="user-avatar">
+                        <img id="header-avatar" src="https://ui-avatars.com/api/?name=User&background=39ff14&color=000" alt="Profile">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main id="content-area">
+
+                <!-- 1. Dashboard Overview -->
+                <section id="dashboard-overview" class="view-section active">
+                    <div class="welcome-banner">
+                        <div class="welcome-text">
+                            <h1 id="welcome-msg">Welcome back!</h1>
+                            <p>Here's what's happening with your fitness today.</p>
+                        </div>
+                        <div class="date-badge" id="current-date">--</div>
+                    </div>
+
+                    <!-- Stats Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="icon-box green">
+                                <i class="fa-solid fa-fire"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Calories Burned</h3>
+                                <p class="stat-value" id="stat-cals-burned">0</p>
+                                <span class="stat-label">kcal today</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="icon-box blue">
+                                <i class="fa-solid fa-drumstick-bite"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Calories Consumed</h3>
+                                <p class="stat-value" id="stat-cals-consumed">0</p>
+                                <span class="stat-label">kcal today</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="icon-box purple">
+                                <i class="fa-solid fa-dumbbell"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Workouts</h3>
+                                <p class="stat-value" id="stat-workouts">0</p>
+                                <span class="stat-label">Completed this week</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="icon-box orange">
+                                <i class="fa-solid fa-trophy"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Current Plan</h3>
+                                <p class="stat-value">Hypertrophy</p>
+                                <span class="stat-label">Week 4 of 12</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-split">
+                        <div class="chart-container">
+                            <h3>Weekly Activity</h3>
+                            <canvas id="weeklyActivityChart"></canvas>
+                        </div>
+                        <div class="recent-activity">
+                            <h3>Recent Logs</h3>
+                            <ul id="recent-logs-list" class="activity-list">
+                                <!-- Populated by JS -->
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. Workouts Section -->
+                <section id="workouts" class="view-section">
+                    <div class="section-header">
+                        <h2>Your Workouts</h2>
+                        <button class="btn btn-primary" id="open-workout-modal">
+                            <i class="fa-solid fa-plus"></i> Add Workout
+                        </button>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table" id="workouts-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Title</th>
+                                    <th>Type</th>
+                                    <th>Duration</th>
+                                    <th>Calories</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Rows via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- 3. Nutrition Section -->
+                <section id="nutrition" class="view-section">
+                    <div class="section-header">
+                        <h2>Nutrition Log</h2>
+                        <button class="btn btn-primary" id="open-meal-modal">
+                            <i class="fa-solid fa-plus"></i> Add Meal
+                        </button>
+                    </div>
+
+                    <div class="nutrition-summary">
+                        <div class="macro-card">
+                            <h4>Total Calories</h4>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" id="cal-progress" style="width: 0%"></div>
+                            </div>
+                            <p><span id="nutri-total-cals">0</span> / 2500 kcal</p>
+                        </div>
+                    </div>
+
+                    <div class="meal-list-container">
+                        <h3>Today's Meals</h3>
+                        <div id="meals-list" class="cards-list">
+                            <!-- Meal Cards via JS -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. Schedule Section -->
+                <section id="schedule" class="view-section">
+                    <div class="section-header">
+                        <h2>Training Schedule</h2>
+                    </div>
+                    <div class="schedule-grid">
+                        <div class="day-card">
+                            <h4>Monday</h4>
+                            <div class="scheduled-item type-strength">Chest & Triceps</div>
+                        </div>
+                        <div class="day-card">
+                            <h4>Tuesday</h4>
+                            <div class="scheduled-item type-cardio">HIIT Cardio</div>
+                        </div>
+                        <div class="day-card">
+                            <h4>Wednesday</h4>
+                            <div class="scheduled-item type-rest">Rest Day</div>
+                        </div>
+                        <div class="day-card active-day">
+                            <h4>Thursday</h4>
+                            <div class="scheduled-item type-strength">Back & Biceps</div>
+                            <span class="badge">Today</span>
+                        </div>
+                        <div class="day-card">
+                            <h4>Friday</h4>
+                            <div class="scheduled-item type-strength">Leg Day</div>
+                        </div>
+                        <div class="day-card">
+                            <h4>Saturday</h4>
+                            <div class="scheduled-item type-flex">Yoga & Recovery</div>
+                        </div>
+                        <div class="day-card">
+                            <h4>Sunday</h4>
+                            <div class="scheduled-item type-rest">Rest Day</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. Progress Section -->
+                <section id="progress" class="view-section">
+                    <div class="section-header">
+                        <h2>Your Progress</h2>
+                    </div>
+                    <div class="chart-full-container">
+                        <h3>Weight History (lbs)</h3>
+                        <canvas id="weightHistoryChart"></canvas>
+                    </div>
+                    <div class="records-grid">
+                        <div class="record-item">
+                            <span>Max Bench</span>
+                            <strong>225 lbs</strong>
+                        </div>
+                        <div class="record-item">
+                            <span>Max Squat</span>
+                            <strong>315 lbs</strong>
+                        </div>
+                        <div class="record-item">
+                            <span>Max Deadlift</span>
+                            <strong>405 lbs</strong>
+                        </div>
+                        <div class="record-item">
+                            <span>Fastest 5k</span>
+                            <strong>22:30</strong>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6. Profile Section -->
+                <section id="profile" class="view-section">
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <img id="profile-page-avatar" src="https://ui-avatars.com/api/?name=User" alt="Avatar">
+                            <h2 id="profile-name">Member Name</h2>
+                            <p id="profile-email">email@example.com</p>
+                            <span class="member-badge">Pro Member</span>
+                        </div>
+                        <form id="profile-form">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" id="edit-name" value="Member Name">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="edit-email" value="member@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Fitness Goal</label>
+                                <select id="edit-goal">
+                                    <option value="weight-loss">Weight Loss</option>
+                                    <option value="muscle-gain">Muscle Gain</option>
+                                    <option value="endurance">Endurance</option>
+                                    <option value="flexibility">Flexibility</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- 7. Settings Section -->
+                <section id="settings" class="view-section">
+                    <div class="settings-container">
+                        <h2>App Settings</h2>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h4>Dark Mode</h4>
+                                <p>Toggle dark/light theme appearance.</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="theme-toggle" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h4>Email Notifications</h4>
+                                <p>Receive weekly progress reports.</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h4>Public Profile</h4>
+                                <p>Allow others to find you in community challenges.</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Modals -->
+
+    <!-- Add Workout Modal -->
+    <div id="modal-workout" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Log Workout</h3>
+                <span class="close-modal" data-modal="modal-workout">&times;</span>
+            </div>
+            <form id="form-workout">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="w-title" placeholder="e.g. Morning Cardio" required>
+                </div>
+                <div class="form-group">
+                    <label>Type</label>
+                    <select id="w-type">
+                        <option value="Strength">Strength</option>
+                        <option value="Cardio">Cardio</option>
+                        <option value="Flexibility">Flexibility</option>
+                        <option value="HIIT">HIIT</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Duration (min)</label>
+                        <input type="number" id="w-duration" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Calories</label>
+                        <input type="number" id="w-calories" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Save Workout</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Meal Modal -->
+    <div id="modal-meal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Log Meal</h3>
+                <span class="close-modal" data-modal="modal-meal">&times;</span>
+            </div>
+            <form id="form-meal">
+                <div class="form-group">
+                    <label>Meal Name</label>
+                    <input type="text" id="m-name" placeholder="e.g. Chicken Salad" required>
+                </div>
+                <div class="form-group">
+                    <label>Calories</label>
+                    <input type="number" id="m-calories" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Add Meal</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
