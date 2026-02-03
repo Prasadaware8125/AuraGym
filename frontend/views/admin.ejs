@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA GYM | Admin Dashboard</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/admin.css">
+    
+    <!-- Script -->
+    <script src="/js/admin.js" defer></script>
+</head>
+<body>
+
+    <div id="admin-app">
+        
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <a href="#" class="logo">
+                    <i class="fa-solid fa-bolt"></i> AURA<span>ADMIN</span>
+                </a>
+            </div>
+
+            <nav class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="#admin-overview" class="nav-link active" data-target="admin-overview">
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>Overview</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#members-management" class="nav-link" data-target="members-management">
+                            <i class="fa-solid fa-users"></i>
+                            <span>Members</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#workouts-analytics" class="nav-link" data-target="workouts-analytics">
+                            <i class="fa-solid fa-dumbbell"></i>
+                            <span>Workouts</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#nutrition-analytics" class="nav-link" data-target="nutrition-analytics">
+                            <i class="fa-solid fa-apple-whole"></i>
+                            <span>Nutrition</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#subscriptions" class="nav-link" data-target="subscriptions">
+                            <i class="fa-solid fa-credit-card"></i>
+                            <span>Subscriptions</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#reports" class="nav-link" data-target="reports">
+                            <i class="fa-solid fa-file-invoice"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#settings" class="nav-link" data-target="settings">
+                            <i class="fa-solid fa-sliders"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <form action="/" method="GET">
+                <div class="sidebar-footer">
+                    <button id="logout-btn">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Log Out</span>
+                    </button>
+                </div>
+            </form>
+        </aside>
+
+        <!-- Main Content Wrapper -->
+        <div id="main-wrapper">
+            
+            <!-- Top Navbar -->
+            <header id="top-navbar">
+                <button id="sidebar-toggle"><i class="fa-solid fa-bars"></i></button>
+                
+                <div class="page-title">
+                    <h2 id="current-page-title">Dashboard Overview</h2>
+                </div>
+
+                <div class="header-actions">
+                    <button class="icon-btn notification-btn">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="badge-dot"></span>
+                    </button>
+                    <div class="admin-profile">
+                        <div class="admin-info">
+                            <span class="admin-name">Admin User</span>
+                            <span class="admin-role">Super Admin</span>
+                        </div>
+                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=39ff14&color=000" alt="Admin" class="avatar">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main id="content-area">
+
+                <!-- 1. Overview Section -->
+                <section id="admin-overview" class="view-section active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon green">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Total Members</h3>
+                                <div class="stat-number" id="total-members">0</div>
+                                <span class="stat-trend positive"><i class="fa-solid fa-arrow-up"></i> +12%</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon blue">
+                                <i class="fa-solid fa-dumbbell"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Total Workouts</h3>
+                                <div class="stat-number" id="total-workouts">0</div>
+                                <span class="stat-trend positive"><i class="fa-solid fa-arrow-up"></i> +5%</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon purple">
+                                <i class="fa-solid fa-credit-card"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Active Subs</h3>
+                                <div class="stat-number" id="active-subs">0</div>
+                                <span class="stat-trend negative"><i class="fa-solid fa-arrow-down"></i> -2%</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange">
+                                <i class="fa-solid fa-dollar-sign"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Est. Revenue</h3>
+                                <div class="stat-number">$12.5k</div>
+                                <span class="stat-label">This Month</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="overview-charts">
+                        <div class="chart-box">
+                            <div class="chart-header">
+                                <h3>Revenue Growth</h3>
+                                <select class="chart-filter">
+                                    <option>Last 6 Months</option>
+                                    <option>Year to Date</option>
+                                </select>
+                            </div>
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                        <div class="chart-box">
+                            <div class="chart-header">
+                                <h3>Membership Tiers</h3>
+                            </div>
+                            <canvas id="membershipPieChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. Members Management -->
+                <section id="members-management" class="view-section">
+                    <div class="section-header">
+                        <h2>Members Directory</h2>
+                        <div class="action-bar">
+                            <input type="text" placeholder="Search members..." class="search-input">
+                            <button class="btn btn-primary"><i class="fa-solid fa-user-plus"></i> Add Member</button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="admin-table" id="members-table">
+                            <thead>
+                                <tr>
+                                    <th>Member</th>
+                                    <th>Status</th>
+                                    <th>Plan</th>
+                                    <th>Joined</th>
+                                    <th>Last Active</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- 3. Workouts Analytics -->
+                <section id="workouts-analytics" class="view-section">
+                    <div class="section-header">
+                        <h2>Workout Analytics</h2>
+                    </div>
+                    <div class="analytics-grid">
+                        <div class="chart-box full-width">
+                            <h3>Popular Workout Types</h3>
+                            <canvas id="workoutTypesChart"></canvas>
+                        </div>
+                        <div class="chart-box">
+                            <h3>Peak Gym Hours</h3>
+                            <canvas id="peakHoursChart"></canvas>
+                        </div>
+                        <div class="info-box">
+                            <h3>Top Performers</h3>
+                            <ul class="top-list">
+                                <li>
+                                    <img src="https://ui-avatars.com/api/?name=J+D" alt="User">
+                                    <div>
+                                        <strong>John Doe</strong>
+                                        <span>24 Workouts / mo</span>
+                                    </div>
+                                    <div class="rank">#1</div>
+                                </li>
+                                <li>
+                                    <img src="https://ui-avatars.com/api/?name=S+M" alt="User">
+                                    <div>
+                                        <strong>Sarah Miller</strong>
+                                        <span>21 Workouts / mo</span>
+                                    </div>
+                                    <div class="rank">#2</div>
+                                </li>
+                                <li>
+                                    <img src="https://ui-avatars.com/api/?name=M+R" alt="User">
+                                    <div>
+                                        <strong>Mike Ross</strong>
+                                        <span>19 Workouts / mo</span>
+                                    </div>
+                                    <div class="rank">#3</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. Nutrition Analytics -->
+                <section id="nutrition-analytics" class="view-section">
+                    <div class="section-header">
+                        <h2>Nutrition Insights</h2>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-details">
+                                <h3>Avg Daily Calories</h3>
+                                <div class="stat-number">2,140</div>
+                                <span class="stat-label">Across all members</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-details">
+                                <h3>Most Logged Item</h3>
+                                <div class="stat-number" style="font-size: 1.2rem">Chicken Breast</div>
+                                <span class="stat-label">1,204 logs</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-box full-width">
+                        <h3>Macro Distribution Average</h3>
+                        <canvas id="macroChart"></canvas>
+                    </div>
+                </section>
+
+                <!-- 5. Subscriptions -->
+                <section id="subscriptions" class="view-section">
+                    <div class="section-header">
+                        <h2>Subscription Plans</h2>
+                    </div>
+                    <div class="plans-grid">
+                        <div class="plan-card">
+                            <div class="plan-header">
+                                <h4>Free Tier</h4>
+                                <div class="price">$0<span>/mo</span></div>
+                            </div>
+                            <ul class="plan-features">
+                                <li>3 Workouts / week</li>
+                                <li>Basic Tracking</li>
+                                <li>Ads Supported</li>
+                            </ul>
+                            <div class="plan-footer">
+                                <span>1,205 Users</span>
+                                <button class="btn btn-sm btn-outline">Edit</button>
+                            </div>
+                        </div>
+                        <div class="plan-card featured">
+                            <div class="plan-header">
+                                <h4>Pro Tier</h4>
+                                <div class="price">$19<span>/mo</span></div>
+                            </div>
+                            <ul class="plan-features">
+                                <li>Unlimited Workouts</li>
+                                <li>AI Coaching</li>
+                                <li>Advanced Analytics</li>
+                            </ul>
+                            <div class="plan-footer">
+                                <span>854 Users</span>
+                                <button class="btn btn-sm btn-primary">Edit</button>
+                            </div>
+                        </div>
+                        <div class="plan-card">
+                            <div class="plan-header">
+                                <h4>Elite Tier</h4>
+                                <div class="price">$49<span>/mo</span></div>
+                            </div>
+                            <ul class="plan-features">
+                                <li>1-on-1 Coaching</li>
+                                <li>Meal Plans</li>
+                                <li>Priority Support</li>
+                            </ul>
+                            <div class="plan-footer">
+                                <span>210 Users</span>
+                                <button class="btn btn-sm btn-outline">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6. Reports -->
+                <section id="reports" class="view-section">
+                    <div class="section-header">
+                        <h2>System Reports</h2>
+                    </div>
+                    <div class="reports-list">
+                        <div class="report-item">
+                            <div class="report-icon"><i class="fa-solid fa-file-pdf"></i></div>
+                            <div class="report-info">
+                                <h4>Monthly Revenue Report</h4>
+                                <p>Generated on Oct 01, 2023</p>
+                            </div>
+                            <button class="btn btn-sm btn-outline" onclick="downloadReport()">Download</button>
+                        </div>
+                        <div class="report-item">
+                            <div class="report-icon"><i class="fa-solid fa-file-csv"></i></div>
+                            <div class="report-info">
+                                <h4>User Engagement Statistics</h4>
+                                <p>Generated on Oct 01, 2023</p>
+                            </div>
+                            <button class="btn btn-sm btn-outline" onclick="downloadReport()">Download</button>
+                        </div>
+                        <div class="report-item">
+                            <div class="report-icon"><i class="fa-solid fa-file-lines"></i></div>
+                            <div class="report-info">
+                                <h4>New Signups Audit</h4>
+                                <p>Generated on Sep 28, 2023</p>
+                            </div>
+                            <button class="btn btn-sm btn-outline" onclick="downloadReport()">Download</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 7. Settings -->
+                <section id="settings" class="view-section">
+                    <div class="settings-wrapper">
+                        <h2>Admin Preferences</h2>
+                        <div class="setting-group">
+                            <div class="setting-row">
+                                <div class="s-info">
+                                    <h4>System Maintenance Mode</h4>
+                                    <p>Prevents members from logging in.</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div class="setting-row">
+                                <div class="s-info">
+                                    <h4>Allow New Registrations</h4>
+                                    <p>Toggle public signup form.</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div class="setting-row">
+                                <div class="s-info">
+                                    <h4>Global Notifications</h4>
+                                    <p>Send push notifications to all active users.</p>
+                                </div>
+                                <button class="btn btn-sm btn-primary">Compose</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Member Modal -->
+    <div id="member-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Member Details</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body" id="member-modal-body">
+                <!-- Content injected via JS -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline close-modal-btn">Close</button>
+                <button class="btn btn-primary" id="save-member-btn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

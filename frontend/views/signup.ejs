@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | AURA GYM</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/signup.css">
+    
+    <!-- Script -->
+    <script src="/js/signup.js" defer></script>
+</head>
+<body>
+
+    <div id="signup-app">
+        
+        <!-- Background Overlay -->
+        <div class="bg-overlay"></div>
+
+        <div class="signup-container fade-in-up">
+            
+            <!-- Header -->
+            <div class="signup-header">
+                <a href="/" class="logo">
+                    <i class="fa-solid fa-bolt"></i> AURA<span>GYM</span>
+                </a>
+                <p class="tagline">Train Smart. Live Strong.</p>
+            </div>
+
+            <!-- Role Switcher -->
+            <div class="role-switcher">
+                <div class="role-bg"></div>
+                <button type="button" class="role-btn active" data-role="member">Member</button>
+                <button type="button" class="role-btn" data-role="admin">Admin</button>
+            </div>
+
+            <!-- Signup Form -->
+            <form id="signup-form" action="/signup" method="POST">
+                <input type="hidden" name="role" id="role" value="member">
+                <!-- Feedback Messages -->
+                <div id="error-msg" class="message-banner error hidden">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span>Error message here.</span>
+                </div>
+                <div id="success-msg" class="message-banner success hidden">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>Account created! Redirecting...</span>
+                </div>
+
+                <!-- Common Fields -->
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-user input-icon"></i>
+                        <input type="text" id="fullname" placeholder="John Doe" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-envelope input-icon"></i>
+                        <input type="email" id="email" placeholder="you@example.com" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="password">Password</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-lock input-icon"></i>
+                            <input type="password" id="password" placeholder="••••••••" required>
+                        </div>
+                    </div>
+                    <div class="form-group half">
+                        <label for="confirm-password">Confirm</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-check-double input-icon"></i>
+                            <input type="password" id="confirm-password" placeholder="••••••••" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MEMBER Specific Fields -->
+                <div id="member-fields" class="role-specific-section">
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="age">Age</label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-calendar-days input-icon"></i>
+                                <input type="number" id="age" placeholder="25" min="16" max="99">
+                            </div>
+                        </div>
+                        <div class="form-group half">
+                            <label for="gender">Gender</label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-venus-mars input-icon"></i>
+                                <select id="gender">
+                                    <option value="" disabled selected>Select</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="goal">Fitness Goal</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-bullseye input-icon"></i>
+                            <select id="goal">
+                                <option value="" disabled selected>Select your primary goal</option>
+                                <option value="weight-loss">Weight Loss</option>
+                                <option value="muscle-gain">Muscle Gain</option>
+                                <option value="endurance">Endurance / Cardio</option>
+                                <option value="maintenance">Maintenance</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ADMIN Specific Fields (Hidden by default) -->
+                <div id="admin-fields" class="role-specific-section hidden">
+                    <div class="form-group">
+                        <label for="admin-code">Admin Access Code</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-key input-icon"></i>
+                            <input type="password" id="admin-code" placeholder="Enter secure admin code">
+                        </div>
+                        <small class="form-hint">Required for administrative privileges.</small>
+                    </div>
+                </div>
+
+                <!-- Terms Checkbox -->
+                <div class="form-actions">
+                    <label class="custom-checkbox">
+                        <input type="checkbox" id="terms" required>
+                        <span class="checkmark"></span>
+                        <span class="label-text">I agree to the <a href="#" class="link-text">Terms & Conditions</a></span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="signup-btn">
+                    <span>Create Account</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </form>
+
+            <!-- Footer -->
+            <div class="signup-footer">
+                <p>Already have an account? <a href="/login">Log In</a></p>
+                <a href="/" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

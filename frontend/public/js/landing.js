@@ -161,27 +161,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // =========================================
     // 4. MODAL LOGIC
     // =========================================
-    const modal = document.getElementById('joinModal');
-    const triggerBtns = document.querySelectorAll('.join-trigger');
-    const closeBtn = document.querySelector('.close-modal');
-    const joinForm = document.getElementById('joinForm');
+    // const modal = document.getElementById('joinModal');
+    // const triggerBtns = document.querySelectorAll('.join-trigger');
+    // const closeBtn = document.querySelector('.close-modal');
+    // const joinForm = document.getElementById('joinForm');
 
-    triggerBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            modal.style.display = 'flex';
-        });
-    });
+    // triggerBtns.forEach(btn => {
+    //     btn.addEventListener('click', (e) => {
+    //         e.preventDefault();
+    //         modal.style.display = 'flex';
+    //     });
+    // });
 
-    closeBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
+    // closeBtn.addEventListener('click', () => {
+    //     modal.style.display = 'none';
+    // });
 
-    window.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.style.display = 'none';
-        }
-    });
+    // window.addEventListener('click', (e) => {
+    //     if (e.target === modal) {
+    //         modal.style.display = 'none';
+    //     }
+    // });
 
     // joinForm.addEventListener('submit', (e) => {
     //     e.preventDefault();

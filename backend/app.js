@@ -31,35 +31,72 @@ app.listen(port, () => {
     console.log(`Listening to port ${port}`);
 });
 
-app.get("/admin/dashboard", (req,res) => {
-    res.send("Welcome to dashboard!");
-});
-
-app.get("/admin/:userID", (req,res) => {
-    res.send("Welcome to user details!");
-});
-
-
-// app.get("/user/dashboard", (req,res) => {
-//     res.render("dashboard");
+// app.get("/admin/dashboard", (req,res) => {
+//     res.render("admin");
 // });
 
-app.post("/user/dashboard", (req, res) => {
-    res.render("member");
-})
+// app.get("/admin/:userID", (req,res) => {
+//     res.send("Welcome to user details!");
+// });
 
-app.get("/user/:userId/workout", (req,res) => {
-    res.send("Welcome to workout Page!");
+
+// app.get("/user/:userId/workout", (req,res) => {
+//     res.send("Welcome to workout Page!");
+// });
+
+// app.get("/user/:userId/diet", (req,res) => {
+//     res.send("Welcome to workout Page!");
+// });
+
+// app.get("/user/:userId/entry", (req,res) => {
+//     res.send("This is entry card!");
+// });
+
+app.get("/login", (req, res) => {
+    res.render("login");
 });
 
-app.get("/user/:userId/diet", (req,res) => {
-    res.send("Welcome to workout Page!");
+app.get("/signup", (req,res) => {
+    res.render("signup");
 });
 
-app.get("/user/:userId/entry", (req,res) => {
-    res.send("This is entry card!");
+app.post("/user/dashboard", async (req, res) => {
+  const { name, email, password, role } = req.body;
+
+  console.log(name, email, password, role);
+
+  if (role === "admin") {
+    // Later: validate admin credentials
+    return res.render("admin");
+  }
+
+  if (role === "member") {
+    // Later: validate member credentials
+    return res.render("member");
+  }
+
+  res.status(400).send("Invalid role");
 });
 
+app.post('/signup', async (req, res) => {
+  const { fullname, email, password, role, adminCode } = req.body;
+
+  console.log(req.body);
+
+  // TEMP validation
+  if (role === 'admin' && adminCode !== 'AURA2024') {
+    return res.send('Invalid Admin Code');
+  }
+
+  // TODO: save user to MongoDB
+  // await Member.create({ name: fullname, email, password, role });
+
+  if (role === 'admin') {
+    return res.render('admin');
+  }
+
+  res.render('member');
+});
 
 
 app.get("/", (req, res) => {

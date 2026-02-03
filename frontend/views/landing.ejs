@@ -39,14 +39,18 @@
             </nav>
 
             <div class="nav-actions">
-                <button class="btn btn-outline login-btn">Log In</button>
-                <button class="btn btn-primary join-trigger">Join Now</button>
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <form action="/login" method="GET">
+                    <button class="btn btn-outline login-btn">Log In</button>
+                </form>
+                <form action="/signup" method="GET">
+                    <button class="btn btn-primary join-trigger">Join Now</button>
+                </form>
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
                 </div>
-            </div>
         </div>
     </header>
 
@@ -58,10 +62,12 @@
                 <span class="hero-badge">AI-Powered Fitness</span>
                 <h1>Train Smart. <br><span class="highlight">Live Strong.</span></h1>
                 <p>Unlock your full potential with AURA GYM. Personalized AI coaching, real-time analytics, and a community that pushes you further.</p>
-                <div class="hero-btns">
-                    <button class="btn btn-primary btn-lg join-trigger">Get Started <i class="fa-solid fa-arrow-right"></i></button>
-                    <a href="#programs" class="btn btn-outline btn-lg">View Programs</a>
-                </div>
+                <form action="/signup" method="get">
+                    <div class="hero-btns">
+                        <button class="btn btn-primary btn-lg join-trigger">Get Started <i class="fa-solid fa-arrow-right"></i></button>
+                        <a href="#programs" class="btn btn-outline btn-lg">View Programs</a>
+                    </div>
+                </form>
                 <div class="hero-stats">
                     <div class="stat-item">
                         <h3>50k+</h3>

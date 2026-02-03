@@ -1,0 +1,410 @@
+/* =========================================
+   1. VARIABLES & RESET
+   ========================================= */
+   :root {
+    --bg-body: #0b0d12;
+    --bg-card: #14171f;
+    --bg-input: #0b0d12;
+    
+    /* Dynamic Accents (Default: Member Green) */
+    --accent: #39ff14;       
+    --accent-glow: rgba(57, 255, 20, 0.4);
+    
+    /* Constants */
+    --member-color: #39ff14;
+    --admin-color: #00f2ff;
+    --danger: #ff4757;
+    
+    --text-white: #ffffff;
+    --text-gray: #a0aec0;
+    --text-muted: #718096;
+    
+    --border-color: rgba(255, 255, 255, 0.08);
+    --radius: 12px;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-white);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+a { text-decoration: none; color: inherit; transition: var(--transition); }
+
+/* =========================================
+   2. LAYOUT & CONTAINER
+   ========================================= */
+#login-app {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Subtle Animated Background */
+.bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 10%, rgba(57, 255, 20, 0.1) 0%, transparent 60%);
+    z-index: -1;
+    transition: background 0.5s ease;
+}
+
+/* Admin Theme Override */
+body[data-theme="admin"] .bg-overlay {
+    background: radial-gradient(circle at 50% 10%, rgba(0, 242, 255, 0.1) 0%, transparent 60%);
+}
+
+.login-container {
+    background: var(--bg-card);
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    position: relative;
+    z-index: 10;
+}
+
+/* =========================================
+   3. HEADER & LOGO
+   ========================================= */
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.logo i { color: var(--accent); transition: color 0.5s ease; }
+.logo span { color: var(--accent); transition: color 0.5s ease; }
+
+.tagline {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+/* =========================================
+   4. ROLE SWITCHER
+   ========================================= */
+.role-switcher {
+    background: var(--bg-input);
+    border-radius: 50px;
+    padding: 5px;
+    display: flex;
+    position: relative;
+    margin-bottom: 30px;
+    border: 1px solid var(--border-color);
+}
+
+.role-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 10px;
+    color: var(--text-gray);
+    font-weight: 600;
+    cursor: pointer;
+    z-index: 2;
+    transition: color 0.3s ease;
+    border-radius: 50px;
+}
+
+.role-btn.active {
+    color: #000;
+}
+
+/* Sliding background for switcher */
+.role-bg {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: calc(50% - 5px);
+    height: calc(100% - 10px);
+    background: var(--accent);
+    border-radius: 50px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+/* Move slider right when Admin is active */
+body[data-theme="admin"] .role-bg {
+    left: 50%;
+    background: var(--admin-color);
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+}
+
+/* =========================================
+   5. FORM STYLES
+   ========================================= */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    transition: var(--transition);
+}
+
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0;
+}
+
+.password-toggle:hover { color: var(--text-white); }
+
+input {
+    width: 100%;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    padding: 12px 40px 12px 40px; /* space for icon */
+    border-radius: 8px;
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    outline: none;
+    transition: var(--transition);
+}
+
+input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.05);
+}
+
+.input-wrapper:focus-within .input-icon {
+    color: var(--accent);
+}
+
+/* =========================================
+   6. ACTIONS & BUTTONS
+   ========================================= */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    font-size: 0.9rem;
+}
+
+.forgot-link {
+    color: var(--text-muted);
+}
+.forgot-link:hover { color: var(--accent); }
+
+/* Custom Checkbox */
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    padding-left: 28px;
+    color: var(--text-gray);
+    user-select: none;
+}
+
+.custom-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.custom-checkbox:hover input ~ .checkmark {
+    border-color: var(--text-gray);
+}
+
+.custom-checkbox input:checked ~ .checkmark {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.custom-checkbox input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.custom-checkbox .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 4px;
+    height: 9px;
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.btn-block {
+    width: 100%;
+    padding: 14px;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: var(--transition);
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.btn-block:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px var(--accent-glow);
+}
+
+/* =========================================
+   7. FOOTER & ALERTS
+   ========================================= */
+.login-footer {
+    margin-top: 30px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+}
+
+.login-footer a {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.back-link {
+    display: block;
+    margin-top: 15px;
+    color: var(--text-gray) !important;
+    font-size: 0.85rem;
+    opacity: 0.7;
+}
+
+.back-link:hover { opacity: 1; }
+
+.error-banner {
+    background: rgba(255, 71, 87, 0.1);
+    color: var(--danger);
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 71, 87, 0.2);
+    animation: shake 0.4s ease-in-out;
+}
+
+.hidden { display: none; }
+
+/* =========================================
+   8. ANIMATIONS
+   ========================================= */
+.fade-in-up {
+    animation: fadeInUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+    .login-container {
+        padding: 30px 20px;
+        max-width: 100%;
+        border: none;
+        background: transparent;
+        box-shadow: none;
+    }
+    
+    body {
+        align-items: flex-start;
+        padding-top: 40px;
+    }
+}
