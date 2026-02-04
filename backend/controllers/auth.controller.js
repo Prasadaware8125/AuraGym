@@ -2,16 +2,14 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-// ============================
-// SIGNUP CONTROLLER
-// ============================
+/* ================= SIGNUP ================= */
 exports.signup = async (req, res) => {
   try {
     const { fullname, email, password, role, adminCode } = req.body;
 
-    if (role === "admin" && adminCode !== "AURA2024") {
-      return res.send("Invalid Admin Code");
-    }
+    // if (role === "admin" ) {   // && adminCode !== "AURA2024"
+    //   return res.send("Invalid Admin Code");
+    // }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -27,8 +25,8 @@ exports.signup = async (req, res) => {
       role
     });
 
-    if (role === "admin") return res.render("admin");
-    return res.render("member");
+    // ✅ AFTER SIGNUP → LOGIN PAGE
+    res.redirect("/login");
 
   } catch (err) {
     console.error(err);
@@ -36,12 +34,11 @@ exports.signup = async (req, res) => {
   }
 };
 
-// ============================
-// LOGIN CONTROLLER
-// ============================
+/* ================= LOGIN ================= */
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    // console.log("LOGIN EMAIL:", email);
 
     const user = await User.findOne({ email });
     if (!user) return res.send("User not found");
@@ -50,19 +47,24 @@ exports.login = async (req, res) => {
     if (!isMatch) return res.send("Invalid password");
 
     const token = jwt.sign(
-      { userId: user._id, role: user.role },
+      { id: user._id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
+res.cookie("token", token, {
+  httpOnly: true,
+  secure: false,        // keep false for localhost
+  sameSite: "lax",      // 🔥 REQUIRED
+  maxAge: 60 * 60 * 1000
+});
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: false,
-      maxAge: 60 * 60 * 1000
-    });
 
-    if (user.role === "admin") return res.render("admin");
-    return res.render("member");
+    // ✅ REDIRECT BASED ON ROLE
+    if (user.role === "admin") {
+      return res.redirect("/admin/dashboard");
+    }
+
+    res.redirect("/member/dashboard");
 
   } catch (err) {
     console.error(err);
