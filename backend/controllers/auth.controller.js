@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 // ============================
@@ -8,21 +9,17 @@ exports.signup = async (req, res) => {
   try {
     const { fullname, email, password, role, adminCode } = req.body;
 
-    // 1️⃣ Admin code validation
     if (role === "admin" && adminCode !== "AURA2024") {
       return res.send("Invalid Admin Code");
     }
 
-    // 2️⃣ Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.send("User already exists");
     }
 
-    // 3️⃣ Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // 4️⃣ Save user to MongoDB
     await User.create({
       fullname,
       email,
@@ -30,15 +27,11 @@ exports.signup = async (req, res) => {
       role
     });
 
-    // 5️⃣ Redirect based on role
-    if (role === "admin") {
-      return res.render("admin");
-    }
-
+    if (role === "admin") return res.render("admin");
     return res.render("member");
 
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     res.status(500).send("Signup failed");
   }
 };
@@ -50,27 +43,29 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // 1️⃣ Find user in DB
     const user = await User.findOne({ email });
-    if (!user) {
-      return res.send("User not found");
-    }
+    if (!user) return res.send("User not found");
 
-    // 2️⃣ Compare password
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
-    if (!isPasswordMatch) {
-      return res.send("Invalid password");
-    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.send("Invalid password");
 
-    // 3️⃣ Redirect based on role stored in DB
-    if (user.role === "admin") {
-      return res.render("admin");
-    }
+    const token = jwt.sign(
+      { userId: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRES_IN }
+    );
 
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      maxAge: 60 * 60 * 1000
+    });
+
+    if (user.role === "admin") return res.render("admin");
     return res.render("member");
 
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     res.status(500).send("Login failed");
   }
 };

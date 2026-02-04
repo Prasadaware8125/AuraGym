@@ -1,6 +1,8 @@
 
 const mongoose = require("mongoose");
 
+require("dotenv").config();
+
 mongoose
   .connect("mongodb://127.0.0.1:27017/aura-gym")
   .then(() => console.log("✅ MongoDB connected"))
@@ -29,6 +31,10 @@ app.use("/", authRoutes);
 app.get("/", (req, res) => res.render("landing"));
 app.get("/login", (req, res) => res.render("login"));
 app.get("/signup", (req, res) => res.render("signup"));
+
+app.post("/user/dashboard", (req, res) => {
+  res.render("member");
+});
 
 app.listen(8080, () => {
   console.log("🚀 Server running on http://localhost:8080");
