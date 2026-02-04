@@ -661,8 +661,12 @@ input:checked + .slider:before { transform: translateX(26px); }
 
 .form-row { display: flex; gap: 15px; }
 
-/* Responsive */
+/* =========================================
+   11. MOBILE WORKOUT IMPROVEMENTS (Responsive)
+   ========================================= */
+
 @media (max-width: 768px) {
+    /* Layout Adjustments */
     #sidebar { transform: translateX(-100%); }
     #sidebar.open { transform: translateX(0); }
     #main-wrapper { margin-left: 0; }
@@ -671,4 +675,98 @@ input:checked + .slider:before { transform: translateX(26px); }
     
     .dashboard-split { grid-template-columns: 1fr; }
     .records-grid { grid-template-columns: 1fr 1fr; }
+
+    /* WORKOUT CARD LAYOUT FOR MOBILE */
+    #workouts .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    #workouts .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Convert Table to Cards */
+    #workouts-table thead {
+        display: none; /* Hide Table Headers */
+    }
+
+    #workouts-table, 
+    #workouts-table tbody, 
+    #workouts-table tr, 
+    #workouts-table td {
+        display: block;
+        width: 100%;
+    }
+
+    #workouts-table tr {
+        margin-bottom: 20px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    #workouts-table td {
+        text-align: right;
+        padding: 10px 0;
+        position: relative;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #workouts-table td:last-child {
+        border-bottom: none;
+        padding-top: 15px;
+        justify-content: center;
+    }
+
+    /* Inject Labels via CSS */
+    #workouts-table td::before {
+        content: attr(data-label); /* Ideal if HTML has data-label, fallback below */
+        float: left;
+        font-weight: 600;
+        color: var(--text-gray);
+        text-transform: uppercase;
+        font-size: 0.75rem;
+    }
+
+    /* Column Specific Labels (Matches member.html structure) */
+    #workouts-table td:nth-of-type(1)::before { content: "Date"; }
+    #workouts-table td:nth-of-type(2)::before { content: "Title"; }
+    #workouts-table td:nth-of-type(3)::before { content: "Type"; }
+    #workouts-table td:nth-of-type(4)::before { content: "Duration"; }
+    #workouts-table td:nth-of-type(5)::before { content: "Calories"; }
+    #workouts-table td:nth-of-type(6)::before { content: ""; display: none; } /* Actions - no label */
+
+    /* Card Specific Styling */
+    #workouts-table td:nth-of-type(2) { /* Title */
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--secondary);
+        border-bottom: 2px solid rgba(255,255,255,0.1);
+        padding-bottom: 15px;
+        margin-bottom: 10px;
+        display: block;
+        text-align: left;
+    }
+
+    #workouts-table td:nth-of-type(2)::before { 
+        display: none; /* Hide "Title" label to treat it as Card Header */
+    }
+
+    /* Action Buttons */
+    #workouts-table .btn-sm {
+        padding: 10px 20px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.9rem;
+    }
 }
