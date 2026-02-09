@@ -3,10 +3,6 @@ const Scheam = mongoose.Schema;
 const passportLocalMongoose = require("passport-local-mongoose").default;
 
 const memberSchema = new Scheam({
-    name: {
-        type: String,
-        required: true,
-    },
     email : {
         type: String,
         required: true,

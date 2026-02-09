@@ -7,8 +7,9 @@ const ejsMate = require("ejs-mate");
 const cookieParser = require("cookie-parser");
 const app = express();
 
-const memberRouter = require("./routes/member.js");
-
+const userRouter = require("./routes/users.js");
+const memberRouter = require("./routes/members.js");
+const adminRouter = require("./routes/admin.js");
 
 // ================== DATABASE ==================
 mongoose
@@ -30,7 +31,12 @@ app.get("/", (req, res) => {
     res.render("landing");
 });
 
-app.use("/", memberRouter);
+app.use("/", userRouter);
+app.use("/member", memberRouter);
+app.use("/admin", adminRouter);
+// app.get("/member", (req, res) => {
+//     res.render("member.ejs");
+// });
 
 
 const port = process.env.PORT;

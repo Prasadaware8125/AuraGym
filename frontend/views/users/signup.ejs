@@ -34,15 +34,15 @@
                 <p class="tagline">Train Smart. Live Strong.</p>
             </div>
 
-            <!-- Role Switcher -->
-            <div class="role-switcher">
-                <div class="role-bg"></div>
-                <button type="button" class="role-btn active" data-role="member">Member</button>
-                <button type="button" class="role-btn" data-role="admin">Admin</button>
-            </div>
-
+            
             <!-- Signup Form -->
             <form id="signup-form" action="/signup" method="POST">
+                <!-- Role Switcher -->
+                <div class="role-switcher">
+                    <div class="role-bg"></div>
+                    <button type="button" class="role-btn active" data-role="member">Member</button>
+                    <button type="button" class="role-btn" data-role="admin">Admin</button>
+                </div>
                 <input type="hidden" name="role" id="role" value="member">
                 <!-- Feedback Messages -->
                 <div id="error-msg" class="message-banner error hidden">
@@ -59,7 +59,7 @@
                     <label for="fullname">Full Name</label>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-user input-icon"></i>
-                        <input type="text" id="fullname" name="name" placeholder="John Doe" required>
+                        <input type="text" id="fullname" name="username" placeholder="John Doe" required>
                     </div>
                 </div>
 
@@ -95,14 +95,14 @@
                             <label for="age">Age</label>
                             <div class="input-wrapper">
                                 <i class="fa-solid fa-calendar-days input-icon"></i>
-                                <input type="number" id="age" placeholder="25" min="16" max="99">
+                                <input name="age" type="number" id="age" placeholder="25" min="16" max="99">
                             </div>
                         </div>
                         <div class="form-group half">
                             <label for="gender">Gender</label>
                             <div class="input-wrapper">
                                 <i class="fa-solid fa-venus-mars input-icon"></i>
-                                <select id="gender">
+                                <select id="gender" name="gender">
                                     <option value="" disabled selected>Select</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
@@ -115,7 +115,7 @@
                         <label for="goal">Fitness Goal</label>
                         <div class="input-wrapper">
                             <i class="fa-solid fa-bullseye input-icon"></i>
-                            <select id="goal">
+                            <select id="goal" name="goal">
                                 <option value="" disabled selected>Select your primary goal</option>
                                 <option value="weight-loss">Weight Loss</option>
                                 <option value="muscle-gain">Muscle Gain</option>
@@ -132,7 +132,7 @@
                         <label for="admin-code">Admin Access Code</label>
                         <div class="input-wrapper">
                             <i class="fa-solid fa-key input-icon"></i>
-                            <input type="password" id="admin-code" placeholder="Enter secure admin code">
+                            <input type="password" id="admin-code" name="accesscode" placeholder="Enter secure admin code">
                         </div>
                         <small class="form-hint">Required for administrative privileges.</small>
                     </div>

@@ -7,8 +7,12 @@ const adminSchema = new Scheam({
         type: String,
         required: true,
     },
+    accesscode: {
+        type: String,
+        required: true,
+    },
 });
 
-adminSchemaSchema.plugin(passportLocalMongoose);
+adminSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model("Admin", adminSchema);
