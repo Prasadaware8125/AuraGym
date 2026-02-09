@@ -112,7 +112,7 @@
             <main id="content-area">
 
                 <!-- 1. Dashboard Overview -->
-                <section id="dashboard-overview" class="view-section active">
+                <section id="dashboard-overview" class="view-section active scroll-reveal">
                     <div class="welcome-banner">
                         <div class="welcome-text">
                             <h1 id="welcome-msg">Welcome back!</h1>
@@ -181,61 +181,159 @@
 
                 <!-- 2. Workouts Section -->
                 <section id="workouts" class="view-section">
-                    <div class="section-header">
-                        <h2>Your Workouts</h2>
+                    
+                    <!-- Header -->
+                    <div class="section-header scroll-reveal">
+                        <div>
+                            <h2>Start a Workout</h2>
+                            <p class="section-subtitle">Choose a program or log your own session.</p>
+                        </div>
                         <button class="btn btn-primary" id="open-workout-modal">
-                            <i class="fa-solid fa-plus"></i> Add Workout
+                            <i class="fa-solid fa-plus"></i> Manual Log
                         </button>
                     </div>
 
-                    <div class="table-container">
-                        <table class="data-table" id="workouts-table">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Title</th>
-                                    <th>Type</th>
-                                    <th>Duration</th>
-                                    <th>Calories</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Rows via JS -->
-                            </tbody>
-                        </table>
+                    <!-- Featured Workouts Grid -->
+                    <div class="workout-cards-grid">
+                        
+                        <!-- Card 1 -->
+                        <div class="workout-card scroll-reveal">
+                            <div class="card-bg" style="background-image: url('/images/beginner.png');"></div>
+                            <div class="card-overlay"></div>
+                            <div class="card-content">
+                                <span class="card-badge beginner">Beginner</span>
+                                <h3>Foundation Start</h3>
+                                <p>Low impact full-body activation.</p>
+                                <div class="card-meta">
+                                    <span><i class="fa-regular fa-clock"></i> 30m</span>
+                                    <span><i class="fa-solid fa-fire"></i> 150 kcal</span>
+                                </div>
+                                <button class="btn btn-glass btn-sm">Start Now</button>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="workout-card scroll-reveal delay-100">
+                            <div class="card-bg" style="background-image: url('/images/intermediate-men.png');"></div>
+                            <div class="card-overlay"></div>
+                            <div class="card-content">
+                                <span class="card-badge intermediate">Intermediate</span>
+                                <h3>Upper Body Power</h3>
+                                <p>Build strength in chest and arms.</p>
+                                <div class="card-meta">
+                                    <span><i class="fa-regular fa-clock"></i> 45m</span>
+                                    <span><i class="fa-solid fa-fire"></i> 320 kcal</span>
+                                </div>
+                                <button class="btn btn-glass btn-sm">Start Now</button>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="workout-card scroll-reveal delay-200">
+                            <div class="card-bg" style="background-image: url('/images/advanced.png');"></div>
+                            <div class="card-overlay"></div>
+                            <div class="card-content">
+                                <span class="card-badge advanced">Advanced</span>
+                                <h3>HIIT Shred</h3>
+                                <p>High intensity cardio interval training.</p>
+                                <div class="card-meta">
+                                    <span><i class="fa-regular fa-clock"></i> 25m</span>
+                                    <span><i class="fa-solid fa-fire"></i> 400 kcal</span>
+                                </div>
+                                <button class="btn btn-glass btn-sm">Start Now</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Recent Logs Table -->
+                    <div class="history-wrapper scroll-reveal delay-300">
+                        <h3>Recent History</h3>
+                        <div class="table-container">
+                            <table class="data-table" id="workouts-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Title</th>
+                                        <th>Type</th>
+                                        <th>Duration</th>
+                                        <th>Calories</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Rows via JS -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </section>
 
                 <!-- 3. Nutrition Section -->
-                <section id="nutrition" class="view-section">
+                <section id="nutrition" class="view-section scroll-reveal">
                     <div class="section-header">
-                        <h2>Nutrition Log</h2>
+                        <div>
+                            <h2>Nutrition & Macros</h2>
+                            <p class="section-subtitle">Fuel your body for performance.</p>
+                        </div>
                         <button class="btn btn-primary" id="open-meal-modal">
-                            <i class="fa-solid fa-plus"></i> Add Meal
+                            <i class="fa-solid fa-plus"></i> Log Meal
                         </button>
                     </div>
 
-                    <div class="nutrition-summary">
-                        <div class="macro-card">
-                            <h4>Total Calories</h4>
-                            <div class="progress-bar-container">
-                                <div class="progress-bar" id="cal-progress" style="width: 0%"></div>
+                    <!-- Macro Overview -->
+                    <div class="macro-overview">
+                        <div class="macro-main-card">
+                            <div class="ring-container">
+                                <svg class="progress-ring" width="120" height="120">
+                                    <circle class="progress-ring__circle-bg" stroke="#1c212e" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                                    <circle class="progress-ring__circle" id="cal-ring" stroke="#39ff14" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                                </svg>
+                                <div class="ring-text">
+                                    <span id="nutri-total-cals">0</span>
+                                    <small>kcal</small>
+                                </div>
                             </div>
-                            <p><span id="nutri-total-cals">0</span> / 2500 kcal</p>
+                            <div class="macro-info">
+                                <h4>Daily Intake</h4>
+                                <p>Target: 2500 kcal</p>
+                            </div>
+                        </div>
+
+                        <!-- Mini Macro Bars -->
+                        <div class="macro-bars-container">
+                            <div class="macro-bar-item">
+                                <div class="mb-header"><span>Protein</span> <span>120g / 180g</span></div>
+                                <div class="mb-track"><div class="mb-fill protein" style="width: 65%"></div></div>
+                            </div>
+                            <div class="macro-bar-item">
+                                <div class="mb-header"><span>Carbs</span> <span>200g / 250g</span></div>
+                                <div class="mb-track"><div class="mb-fill carbs" style="width: 80%"></div></div>
+                            </div>
+                            <div class="macro-bar-item">
+                                <div class="mb-header"><span>Fats</span> <span>45g / 70g</span></div>
+                                <div class="mb-track"><div class="mb-fill fats" style="width: 50%"></div></div>
+                            </div>
+                        </div>
+
+                        <!-- Nutrition Insight -->
+                        <div class="insight-card nutrition-insight">
+                            <div class="insight-icon"><i class="fa-solid fa-carrot"></i></div>
+                            <div class="insight-content">
+                                <h4>Smart Tip</h4>
+                                <p>You're a bit low on protein today. Consider a shake post-workout!</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="meal-list-container">
-                        <h3>Today's Meals</h3>
-                        <div id="meals-list" class="cards-list">
-                            <!-- Meal Cards via JS -->
-                        </div>
+                    <h3 class="subsection-title">Today's Logs</h3>
+                    <div id="meals-list" class="cards-list">
+                        <!-- Meal Cards via JS -->
                     </div>
                 </section>
 
                 <!-- 4. Schedule Section -->
-                <section id="schedule" class="view-section">
+                <section id="schedule" class="view-section scroll-reveal">
                     <div class="section-header">
                         <h2>Training Schedule</h2>
                     </div>
@@ -273,80 +371,147 @@
                 </section>
 
                 <!-- 5. Progress Section -->
-                <section id="progress" class="view-section">
+                <section id="progress" class="view-section scroll-reveal">
                     <div class="section-header">
-                        <h2>Your Progress</h2>
+                        <div>
+                            <h2>Performance Analytics</h2>
+                            <p class="section-subtitle">Tracking your evolution over time.</p>
+                        </div>
                     </div>
-                    <div class="chart-full-container">
-                        <h3>Weight History (lbs)</h3>
-                        <canvas id="weightHistoryChart"></canvas>
-                    </div>
-                    <div class="records-grid">
-                        <div class="record-item">
-                            <span>Max Bench</span>
-                            <strong>225 lbs</strong>
+
+                    <div class="progress-dashboard">
+                        <!-- Visual Context Background -->
+                        <div class="progress-bg-visual"><i class="fa-solid fa-chart-line"></i></div>
+
+                        <div class="chart-area glass-panel">
+                            <div class="chart-header-row">
+                                <h3>Weight History</h3>
+                                <div class="chart-legend">
+                                    <span class="dot-legend"></span> Body Weight (lbs)
+                                </div>
+                            </div>
+                            <div class="chart-wrapper">
+                                <canvas id="weightHistoryChart"></canvas>
+                            </div>
                         </div>
-                        <div class="record-item">
-                            <span>Max Squat</span>
-                            <strong>315 lbs</strong>
+
+                        <!-- AI Insight -->
+                        <div class="insight-card ai-insight glass-panel">
+                            <div class="insight-icon pulse"><i class="fa-solid fa-robot"></i></div>
+                            <div class="insight-content">
+                                <h4>AI Analysis</h4>
+                                <p>Your consistency is up <strong>15%</strong> this month. Projected to hit 170 lbs goal by Nov 15th.</p>
+                            </div>
                         </div>
-                        <div class="record-item">
-                            <span>Max Deadlift</span>
-                            <strong>405 lbs</strong>
-                        </div>
-                        <div class="record-item">
-                            <span>Fastest 5k</span>
-                            <strong>22:30</strong>
+
+                        <!-- Enhanced Stat Cards -->
+                        <div class="records-grid-enhanced">
+                            <div class="stat-card-enhanced">
+                                <div class="sce-icon"><i class="fa-solid fa-dumbbell"></i></div>
+                                <div class="sce-data">
+                                    <span>Max Bench</span>
+                                    <strong class="counter" data-target="225">0</strong> <small>lbs</small>
+                                </div>
+                                <div class="sce-trend positive"><i class="fa-solid fa-arrow-trend-up"></i> 5%</div>
+                            </div>
+                            <div class="stat-card-enhanced">
+                                <div class="sce-icon"><i class="fa-solid fa-person-running"></i></div>
+                                <div class="sce-data">
+                                    <span>Max Squat</span>
+                                    <strong class="counter" data-target="315">0</strong> <small>lbs</small>
+                                </div>
+                                <div class="sce-trend positive"><i class="fa-solid fa-arrow-trend-up"></i> 2%</div>
+                            </div>
+                            <div class="stat-card-enhanced">
+                                <div class="sce-icon"><i class="fa-solid fa-weight-hanging"></i></div>
+                                <div class="sce-data">
+                                    <span>Deadlift</span>
+                                    <strong class="counter" data-target="405">0</strong> <small>lbs</small>
+                                </div>
+                                <div class="sce-trend neutral"><i class="fa-solid fa-minus"></i> 0%</div>
+                            </div>
+                            <div class="stat-card-enhanced">
+                                <div class="sce-icon"><i class="fa-solid fa-stopwatch"></i></div>
+                                <div class="sce-data">
+                                    <span>Fastest 5k</span>
+                                    <strong>22:30</strong>
+                                </div>
+                                <div class="sce-trend positive"><i class="fa-solid fa-arrow-trend-down"></i> 10s</div>
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- 6. Profile Section -->
-                <section id="profile" class="view-section">
-                    <div class="profile-card">
-                        <div class="profile-header">
-                            <img id="profile-page-avatar" src="https://ui-avatars.com/api/?name=User" alt="Avatar">
-                            <h2 id="profile-name">Member Name</h2>
-                            <p id="profile-email">email@example.com</p>
-                            <span class="member-badge">Pro Member</span>
+                <!-- 6. Profile Section (REDESIGNED) -->
+                <section id="profile" class="view-section scroll-reveal">
+                    <div class="profile-dashboard">
+                        <!-- Visual Context -->
+                        <div class="progress-bg-visual" style="right: auto; left: -50px; opacity: 0.05;">
+                            <i class="fa-solid fa-user-circle"></i>
                         </div>
-                        <form id="profile-form">
-                            <div class="form-group">
-                                <label>Full Name</label>
-                                <input type="text" id="edit-name" value="Member Name">
+
+                        <div class="profile-card glass-panel profile-container-enhanced">
+                            <div class="profile-header-visual">
+                                <div class="avatar-wrapper">
+                                    <img id="profile-page-avatar" src="https://ui-avatars.com/api/?name=User" alt="Avatar">
+                                    <button class="edit-avatar-btn"><i class="fa-solid fa-camera"></i></button>
+                                </div>
+                                <div class="profile-titles">
+                                    <h2 id="profile-name">Member Name</h2>
+                                    <p id="profile-email">email@example.com</p>
+                                    <span class="member-badge">Pro Member</span>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" id="edit-email" value="member@example.com">
-                            </div>
-                            <div class="form-group">
-                                <label>Fitness Goal</label>
-                                <select id="edit-goal">
-                                    <option value="weight-loss">Weight Loss</option>
-                                    <option value="muscle-gain">Muscle Gain</option>
-                                    <option value="endurance">Endurance</option>
-                                    <option value="flexibility">Flexibility</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
-                        </form>
+
+                            <form id="profile-form" class="profile-form-grid">
+                                <div class="form-group">
+                                    <label><i class="fa-solid fa-user"></i> Full Name</label>
+                                    <input type="text" id="edit-name" class="form-input" value="Member Name">
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fa-solid fa-envelope"></i> Email Address</label>
+                                    <input type="email" id="edit-email" class="form-input" value="member@example.com">
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fa-solid fa-bullseye"></i> Fitness Goal</label>
+                                    <div class="select-wrapper">
+                                        <select id="edit-goal" class="form-input">
+                                            <option value="weight-loss">Weight Loss</option>
+                                            <option value="muscle-gain">Muscle Gain</option>
+                                            <option value="endurance">Endurance</option>
+                                            <option value="flexibility">Flexibility</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary btn-save">
+                                        <span>Save Changes</span>
+                                        <i class="fa-solid fa-check"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </section>
 
-                <!-- 7. Settings Section -->
-                <section id="settings" class="view-section">
-                    <div class="settings-container">
+                <!-- 7. Settings Section (ENHANCED) -->
+                <section id="settings" class="view-section scroll-reveal">
+                    <div class="settings-container glass-panel">
                         <h2>App Settings</h2>
+                        
+                        <!-- Dark Mode Toggle -->
                         <div class="setting-item">
                             <div class="setting-info">
                                 <h4>Dark Mode</h4>
-                                <p>Toggle dark/light theme appearance.</p>
+                                <p>Switch between light and dark themes.</p>
                             </div>
                             <label class="switch">
-                                <input type="checkbox" id="theme-toggle" checked>
+                                <input type="checkbox" id="theme-toggle">
                                 <span class="slider round"></span>
                             </label>
                         </div>
+
                         <div class="setting-item">
                             <div class="setting-info">
                                 <h4>Email Notifications</h4>

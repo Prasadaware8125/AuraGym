@@ -75,6 +75,7 @@
                     </li>
                 </ul>
             </nav>
+
             <form action="/" method="GET">
                 <div class="sidebar-footer">
                     <button id="logout-btn">
@@ -118,9 +119,7 @@
                 <section id="admin-overview" class="view-section active">
                     <div class="stats-grid">
                         <div class="stat-card">
-                            <div class="stat-icon green">
-                                <i class="fa-solid fa-users"></i>
-                            </div>
+                            <div class="stat-icon green"><i class="fa-solid fa-users"></i></div>
                             <div class="stat-details">
                                 <h3>Total Members</h3>
                                 <div class="stat-number" id="total-members">0</div>
@@ -128,9 +127,7 @@
                             </div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-icon blue">
-                                <i class="fa-solid fa-dumbbell"></i>
-                            </div>
+                            <div class="stat-icon blue"><i class="fa-solid fa-dumbbell"></i></div>
                             <div class="stat-details">
                                 <h3>Total Workouts</h3>
                                 <div class="stat-number" id="total-workouts">0</div>
@@ -138,9 +135,7 @@
                             </div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-icon purple">
-                                <i class="fa-solid fa-credit-card"></i>
-                            </div>
+                            <div class="stat-icon purple"><i class="fa-solid fa-credit-card"></i></div>
                             <div class="stat-details">
                                 <h3>Active Subs</h3>
                                 <div class="stat-number" id="active-subs">0</div>
@@ -148,9 +143,7 @@
                             </div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-icon orange">
-                                <i class="fa-solid fa-dollar-sign"></i>
-                            </div>
+                            <div class="stat-icon orange"><i class="fa-solid fa-dollar-sign"></i></div>
                             <div class="stat-details">
                                 <h3>Est. Revenue</h3>
                                 <div class="stat-number">$12.5k</div>
@@ -181,24 +174,78 @@
 
                 <!-- 2. Members Management -->
                 <section id="members-management" class="view-section">
-                    <div class="section-header">
-                        <h2>Members Directory</h2>
-                        <div class="action-bar">
-                            <input type="text" placeholder="Search members..." class="search-input">
-                            <button class="btn btn-primary"><i class="fa-solid fa-user-plus"></i> Add Member</button>
+                    
+                    <!-- Member Insight Stats -->
+                    <div class="member-stats-row scroll-reveal">
+                        <div class="m-stat-card">
+                            <div class="m-stat-icon"><i class="fa-solid fa-users"></i></div>
+                            <div class="m-stat-data">
+                                <span>Total Members</span>
+                                <h3 class="counter" data-target="1245">0</h3>
+                            </div>
+                        </div>
+                        <div class="m-stat-card active-glow">
+                            <div class="m-stat-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                            <div class="m-stat-data">
+                                <span>Active Now</span>
+                                <h3 class="counter" data-target="142">0</h3>
+                            </div>
+                        </div>
+                        <div class="m-stat-card">
+                            <div class="m-stat-icon"><i class="fa-solid fa-crown"></i></div>
+                            <div class="m-stat-data">
+                                <span>Pro / Elite</span>
+                                <h3 class="counter" data-target="854">0</h3>
+                            </div>
+                        </div>
+                        <div class="m-stat-card">
+                            <div class="m-stat-icon"><i class="fa-solid fa-user-plus"></i></div>
+                            <div class="m-stat-data">
+                                <span>New This Week</span>
+                                <h3 class="counter" data-target="38">0</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Control Bar -->
+                    <div class="members-control-bar glass-panel scroll-reveal delay-100">
+                        <div class="control-top">
+                            <div class="search-wrapper">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" id="member-search" placeholder="Search by name, email, or plan...">
+                                <div class="search-focus-border"></div>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn btn-sm btn-outline"><i class="fa-solid fa-file-export"></i> Export</button>
+                                <button class="btn btn-sm btn-primary"><i class="fa-solid fa-user-plus"></i> Add Member</button>
+                            </div>
+                        </div>
+                        <div class="control-bottom">
+                            <div class="filter-pills">
+                                <button class="pill active" data-filter="all">All Members</button>
+                                <button class="pill" data-filter="active"><span class="dot active"></span> Active</button>
+                                <button class="pill" data-filter="inactive"><span class="dot inactive"></span> Inactive</button>
+                                <span class="divider"></span>
+                                <button class="pill" data-filter="pro">Pro Plan</button>
+                                <button class="pill" data-filter="elite">Elite Plan</button>
+                            </div>
+                            <div class="results-count">
+                                Showing <span id="current-count">0</span> of <span id="total-count">0</span>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="table-container">
+                    <!-- Premium Table -->
+                    <div class="table-container scroll-reveal delay-200">
                         <table class="admin-table" id="members-table">
                             <thead>
                                 <tr>
-                                    <th>Member</th>
+                                    <th>Member Profile</th>
                                     <th>Status</th>
-                                    <th>Plan</th>
-                                    <th>Joined</th>
-                                    <th>Last Active</th>
-                                    <th>Actions</th>
+                                    <th>Membership</th>
+                                    <th>Joined Date</th>
+                                    <th>Last Activity</th>
+                                    <th class="text-right">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -210,74 +257,233 @@
 
                 <!-- 3. Workouts Analytics -->
                 <section id="workouts-analytics" class="view-section">
-                    <div class="section-header">
+                    <div class="section-header scroll-reveal">
                         <h2>Workout Analytics</h2>
+                        <p class="section-desc">Real-time tracking of popular programs and gym usage.</p>
                     </div>
-                    <div class="analytics-grid">
-                        <div class="chart-box full-width">
-                            <h3>Popular Workout Types</h3>
-                            <canvas id="workoutTypesChart"></canvas>
+
+                    <!-- Visual Workout Cards Grid -->
+                    <div class="workout-analytics-grid">
+                        <div class="wa-card scroll-reveal">
+                            <div class="wa-bg" style="background-image: url('/images/upper_b.png');"></div>
+                            <div class="wa-overlay"></div>
+                            <div class="wa-content">
+                                <div class="wa-top">
+                                    <span class="wa-badge popular">Most Popular</span>
+                                    <button class="wa-more"><i class="fa-solid fa-ellipsis"></i></button>
+                                </div>
+                                <div class="wa-bottom">
+                                    <h3>Upper Body Power</h3>
+                                    <div class="wa-stats">
+                                        <div class="wa-stat"><span>Completions</span><strong>4,230</strong></div>
+                                        <div class="wa-growth up"><i class="fa-solid fa-arrow-up"></i> 12%</div>
+                                    </div>
+                                    <div class="wa-progress-track"><div class="wa-progress-fill" style="width: 85%"></div></div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="chart-box">
+                        <div class="wa-card scroll-reveal delay-100">
+                            <div class="wa-bg" style="background-image: url('/images/hiit_g.png');"></div>
+                            <div class="wa-overlay"></div>
+                            <div class="wa-content">
+                                <div class="wa-top"><span class="wa-badge trending">Trending</span></div>
+                                <div class="wa-bottom">
+                                    <h3>HIIT Shred</h3>
+                                    <div class="wa-stats">
+                                        <div class="wa-stat"><span>Completions</span><strong>2,845</strong></div>
+                                        <div class="wa-growth up"><i class="fa-solid fa-arrow-up"></i> 24%</div>
+                                    </div>
+                                    <div class="wa-progress-track"><div class="wa-progress-fill" style="width: 65%"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wa-card scroll-reveal delay-200">
+                            <div class="wa-bg" style="background-image: url('/images/running_girl3.png');"></div>
+                            <div class="wa-overlay"></div>
+                            <div class="wa-content">
+                                <div class="wa-top"><span class="wa-badge stable">Stable</span></div>
+                                <div class="wa-bottom">
+                                    <h3>Endurance Run</h3>
+                                    <div class="wa-stats">
+                                        <div class="wa-stat"><span>Completions</span><strong>1,920</strong></div>
+                                        <div class="wa-growth down"><i class="fa-solid fa-arrow-down"></i> 3%</div>
+                                    </div>
+                                    <div class="wa-progress-track"><div class="wa-progress-fill" style="width: 45%"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Split Section -->
+                    <div class="analytics-split-row">
+                        <div class="peak-hours-card glass-panel scroll-reveal delay-100">
                             <h3>Peak Gym Hours</h3>
-                            <canvas id="peakHoursChart"></canvas>
+                            <div class="bar-chart-container">
+                                <div class="chart-bar-group">
+                                    <div class="bar" style="--h: 20%;" data-time="6am"></div>
+                                    <div class="bar" style="--h: 40%;" data-time="9am"></div>
+                                    <div class="bar" style="--h: 30%;" data-time="12pm"></div>
+                                    <div class="bar peak" style="--h: 85%;" data-time="5pm"></div>
+                                    <div class="bar peak" style="--h: 95%;" data-time="6pm"></div>
+                                    <div class="bar peak" style="--h: 70%;" data-time="7pm"></div>
+                                    <div class="bar" style="--h: 40%;" data-time="9pm"></div>
+                                </div>
+                            </div>
+                            <div class="chart-labels"><span>Morning</span><span>Afternoon</span><span>Evening</span></div>
                         </div>
-                        <div class="info-box">
+                        <div class="top-performers-card glass-panel scroll-reveal delay-200">
                             <h3>Top Performers</h3>
-                            <ul class="top-list">
-                                <li>
-                                    <img src="https://ui-avatars.com/api/?name=J+D" alt="User">
-                                    <div>
-                                        <strong>John Doe</strong>
-                                        <span>24 Workouts / mo</span>
-                                    </div>
-                                    <div class="rank">#1</div>
+                            <ul class="leaderboard-list">
+                                <li class="leader-item rank-1">
+                                    <div class="rank-badge">1</div>
+                                    <div class="leader-avatar glow-avatar"><img src="https://ui-avatars.com/api/?name=J+D&background=random" alt="User"></div>
+                                    <div class="leader-info"><strong>John Doe</strong><span>24 Workouts</span></div>
+                                    <div class="leader-trend up"><i class="fa-solid fa-fire"></i></div>
                                 </li>
-                                <li>
-                                    <img src="https://ui-avatars.com/api/?name=S+M" alt="User">
-                                    <div>
-                                        <strong>Sarah Miller</strong>
-                                        <span>21 Workouts / mo</span>
-                                    </div>
-                                    <div class="rank">#2</div>
+                                <li class="leader-item rank-2">
+                                    <div class="rank-badge">2</div>
+                                    <div class="leader-avatar"><img src="https://ui-avatars.com/api/?name=S+M&background=random" alt="User"></div>
+                                    <div class="leader-info"><strong>Sarah Miller</strong><span>21 Workouts</span></div>
                                 </li>
-                                <li>
-                                    <img src="https://ui-avatars.com/api/?name=M+R" alt="User">
-                                    <div>
-                                        <strong>Mike Ross</strong>
-                                        <span>19 Workouts / mo</span>
-                                    </div>
-                                    <div class="rank">#3</div>
+                                <li class="leader-item rank-3">
+                                    <div class="rank-badge">3</div>
+                                    <div class="leader-avatar"><img src="https://ui-avatars.com/api/?name=M+R&background=random" alt="User"></div>
+                                    <div class="leader-info"><strong>Mike Ross</strong><span>19 Workouts</span></div>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </section>
 
-                <!-- 4. Nutrition Analytics -->
+                <!-- 4. Nutrition Analytics (REDESIGNED) -->
                 <section id="nutrition-analytics" class="view-section">
-                    <div class="section-header">
-                        <h2>Nutrition Insights</h2>
+                    <div class="section-header scroll-reveal">
+                        <div>
+                            <h2>Nutrition Insights</h2>
+                            
+                            
+                        </div>
+                        <p class="section-desc">Real-time nutrition trends across members</p>
                     </div>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-details">
-                                <h3>Avg Daily Calories</h3>
-                                <div class="stat-number">2,140</div>
-                                <span class="stat-label">Across all members</span>
+
+                    <!-- Nutrition Cards Grid -->
+                    <div class="nutrition-grid">
+                        <!-- Card 1 -->
+                        <div class="nutrition-card scroll-reveal">
+                            <div class="nutrition-bg" style="background-image: url('/images/chicken.png');"></div>
+                            <div class="nutrition-overlay"></div>
+                            <div class="nutrition-badge highlight">Most Logged</div>
+                            <div class="nutrition-content">
+                                <div class="nutri-top">
+                                    <h3>Chicken Breast</h3>
+                                    <p>165 kcal / 100g</p>
+                                </div>
+                                <div class="nutri-bottom">
+                                    <div class="log-stat">
+                                        <i class="fa-solid fa-utensils"></i> <span>1,204 logs</span>
+                                    </div>
+                                    <div class="n-progress-track"><div class="n-progress-fill" style="width: 85%"></div></div>
+                                </div>
                             </div>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-details">
-                                <h3>Most Logged Item</h3>
-                                <div class="stat-number" style="font-size: 1.2rem">Chicken Breast</div>
-                                <span class="stat-label">1,204 logs</span>
+                        <!-- Card 2 -->
+                        <div class="nutrition-card scroll-reveal delay-100">
+                            <div class="nutrition-bg" style="background-image: url('/images/protein_oats.png');"></div>
+                            <div class="nutrition-overlay"></div>
+                            <div class="nutrition-badge healthy">High Fiber</div>
+                            <div class="nutrition-content">
+                                <div class="nutri-top">
+                                    <h3>Oats Bowl</h3>
+                                    <p>300 kcal / serving</p>
+                                </div>
+                                <div class="nutri-bottom">
+                                    <div class="log-stat">
+                                        <i class="fa-solid fa-bowl-rice"></i> <span>980 logs</span>
+                                    </div>
+                                    <div class="n-progress-track"><div class="n-progress-fill" style="width: 65%"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card 3 -->
+                        <div class="nutrition-card scroll-reveal delay-200">
+                            <div class="nutrition-bg" style="background-image: url('/images/eggs.png');"></div>
+                            <div class="nutrition-overlay"></div>
+                            <div class="nutrition-badge protein">Protein Snack</div>
+                            <div class="nutrition-content">
+                                <div class="nutri-top">
+                                    <h3>Boiled Eggs</h3>
+                                    <p>70 kcal / egg</p>
+                                </div>
+                                <div class="nutri-bottom">
+                                    <div class="log-stat">
+                                        <i class="fa-solid fa-egg"></i> <span>850 logs</span>
+                                    </div>
+                                    <div class="n-progress-track"><div class="n-progress-fill" style="width: 50%"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                         <!-- Card 4 -->
+                         <div class="nutrition-card scroll-reveal delay-200">
+                            <div class="nutrition-bg" style="background-image: url('/images/salad.png');"></div>
+                            <div class="nutrition-overlay"></div>
+                            <div class="nutrition-badge trending">Trending</div>
+                            <div class="nutrition-content">
+                                <div class="nutri-top">
+                                    <h3>Mixed Salad</h3>
+                                    <p>120 kcal / bowl</p>
+                                </div>
+                                <div class="nutri-bottom">
+                                    <div class="log-stat">
+                                        <i class="fa-solid fa-leaf"></i> <span>640 logs</span>
+                                    </div>
+                                    <div class="n-progress-track"><div class="n-progress-fill" style="width: 35%"></div></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="chart-box full-width">
-                        <h3>Macro Distribution Average</h3>
-                        <canvas id="macroChart"></canvas>
+
+                    <!-- Analytics Row: Macros + Trends -->
+                    <div class="nutrition-split-row scroll-reveal delay-100">
+                        <!-- Macro Bars -->
+                        <div class="macro-panel glass-panel">
+                            <h3>Macro Distribution Average</h3>
+                            <div class="macro-list">
+                                <!-- Protein -->
+                                <div class="macro-item">
+                                    <div class="macro-label"><span>Protein</span> <span>45%</span></div>
+                                    <div class="macro-track"><div class="macro-bar protein" style="--w: 45%"></div></div>
+                                </div>
+                                <!-- Carbs -->
+                                 <div class="macro-item">
+                                    <div class="macro-label"><span>Carbs</span> <span>35%</span></div>
+                                    <div class="macro-track"><div class="macro-bar carbs" style="--w: 35%"></div></div>
+                                </div>
+                                <!-- Fats -->
+                                 <div class="macro-item">
+                                    <div class="macro-label"><span>Fats</span> <span>20%</span></div>
+                                    <div class="macro-track"><div class="macro-bar fats" style="--w: 20%"></div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Trends -->
+                        <div class="trends-panel glass-panel">
+                            <h3>Monthly Trends</h3>
+                            <div class="trend-item up">
+                                <div class="trend-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                                <div>
+                                    <h4>Protein Intake</h4>
+                                    <span>Up 12% vs last month</span>
+                                </div>
+                            </div>
+                            <div class="trend-item down">
+                                <div class="trend-icon"><i class="fa-solid fa-arrow-trend-down"></i></div>
+                                <div>
+                                    <h4>Sugar Consumption</h4>
+                                    <span>Down 7% (Good job!)</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
