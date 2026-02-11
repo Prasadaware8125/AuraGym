@@ -45,13 +45,15 @@
                 </div>
                 <input type="hidden" name="role" id="role" value="member">
                 <!-- Feedback Messages -->
-                <div id="error-msg" class="message-banner error hidden">
+                <% if (success && success.length) { %>
+                    <div id="success-msg" class="message-banner success">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span><%= success[0] %></span>
+                    </div>
+                <% } %>
+                <div id="error-msg" class="message-banner error <%= error && error.length ? '' : 'hidden' %>">
                     <i class="fa-solid fa-circle-exclamation"></i>
-                    <span>Error message here.</span>
-                </div>
-                <div id="success-msg" class="message-banner success hidden">
-                    <i class="fa-solid fa-circle-check"></i>
-                    <span>Account created! Redirecting...</span>
+                    <span><%= error && error.length ? error[0] : 'Error message here.' %></span>
                 </div>
 
                 <!-- Common Fields -->

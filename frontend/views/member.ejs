@@ -21,6 +21,17 @@
 
     <div id="member-app">
         
+        <% if (success && success.length) { %>
+            <div class="flash-success">
+                <%= success[0] %>
+            </div>
+        <% } %>
+        <% if (error && error.length) { %>
+            <div class="flash-error">
+                <%= error[0] %>
+            </div>
+        <% } %>
+        
         <!-- Sidebar Navigation -->
         <aside id="sidebar">
             <div class="sidebar-header">
@@ -30,6 +41,7 @@
             </div>
 
             <nav class="sidebar-menu">
+                
                 <ul>
                     <li>
                         <a href="#dashboard-overview" class="nav-link active" data-target="dashboard-overview">
@@ -99,7 +111,7 @@
 
                 <div class="user-menu">
                     <div class="user-info">
-                        <span class="user-name">Loading...</span>
+                        <span class="user-name"><%= currentUser.username %></span>
                         <span class="user-role">Member</span>
                     </div>
                     <div class="user-avatar">
@@ -115,7 +127,7 @@
                 <section id="dashboard-overview" class="view-section active scroll-reveal">
                     <div class="welcome-banner">
                         <div class="welcome-text">
-                            <h1 id="welcome-msg">Welcome back!</h1>
+                            <h1 id="welcome-msg">Welcome back <%= currentUser.username %>!</h1>
                             <p>Here's what's happening with your fitness today.</p>
                         </div>
                         <div class="date-badge" id="current-date">--</div>
@@ -457,8 +469,8 @@
                                     <button class="edit-avatar-btn"><i class="fa-solid fa-camera"></i></button>
                                 </div>
                                 <div class="profile-titles">
-                                    <h2 id="profile-name">Member Name</h2>
-                                    <p id="profile-email">email@example.com</p>
+                                    <h2 id="profile-name"><%= currentUser.username %></h2>
+                                    <p id="profile-email"><%= currentUser.email %></p>
                                     <span class="member-badge">Pro Member</span>
                                 </div>
                             </div>
@@ -466,11 +478,11 @@
                             <form id="profile-form" class="profile-form-grid">
                                 <div class="form-group">
                                     <label><i class="fa-solid fa-user"></i> Full Name</label>
-                                    <input type="text" id="edit-name" class="form-input" value="Member Name">
+                                    <input type="text" id="edit-name" class="form-input" name="username" value="<%= currentUser.username %>">
                                 </div>
                                 <div class="form-group">
                                     <label><i class="fa-solid fa-envelope"></i> Email Address</label>
-                                    <input type="email" id="edit-email" class="form-input" value="member@example.com">
+                                    <input type="email" id="edit-email" class="form-input" name="email" value="<%= currentUser.email %>">
                                 </div>
                                 <div class="form-group">
                                     <label><i class="fa-solid fa-bullseye"></i> Fitness Goal</label>
@@ -538,6 +550,14 @@
             </main>
         </div>
     </div>
+
+    <!-- Server data bootstrap for JS -->
+    <script>
+        window.MEMBER_BOOTSTRAP = {
+            workouts: <%- JSON.stringify(currentUser && currentUser.workouts ? currentUser.workouts : []) %>,
+            meals: <%- JSON.stringify(currentUser && currentUser.meals ? currentUser.meals : []) %>
+        };
+    </script>
 
     <!-- Modals -->
 

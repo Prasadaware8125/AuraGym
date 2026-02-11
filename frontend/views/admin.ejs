@@ -21,6 +21,22 @@
 
     <div id="admin-app">
         
+        <% if (success && success.length) { %>
+            <div class="flash-success">
+                <%= success[0] %>
+            </div>
+        <% } %>
+        <% if (error && error.length) { %>
+            <div class="flash-error">
+                <%= error[0] %>
+            </div>
+        <% } %>
+        
+        <!-- Bootstrap server-side members for JS -->
+        <script>
+            window.ADMIN_MEMBERS = <%- JSON.stringify(typeof members !== 'undefined' ? members : []) %>;
+        </script>
+
         <!-- Sidebar Navigation -->
         <aside id="sidebar">
             <div class="sidebar-header">
@@ -104,7 +120,7 @@
                     </button>
                     <div class="admin-profile">
                         <div class="admin-info">
-                            <span class="admin-name"><%= registerUser.username%></span>
+                            <span class="admin-name"><%= currentUser.username%></span>
                             <span class="admin-role">Super Admin</span>
                         </div>
                         <img src="https://ui-avatars.com/api/?name=Admin+User&background=39ff14&color=000" alt="Admin" class="avatar">

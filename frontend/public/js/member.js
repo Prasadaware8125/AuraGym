@@ -2,32 +2,29 @@
 
 /**
  * AURA GYM MEMBER DASHBOARD
- * Features: Auth, Data, Theme, Animations, Charts
+ * Frontend controller for the logged-in member.
+ * - Uses workouts + meals injected from the server (window.MEMBER_BOOTSTRAP)
+ * - Handles theme, navigation, modals, and charts
+ * - Renders dynamic stats based on the member's own data
  */
 
+// Single in-memory state object for the whole dashboard
 const APP = {
-    user: { name: 'Alex Johnson', email: 'alex.j@auragym.com', joined: '2023-11-15' },
-    workouts: [
-        { id: 1, date: '2023-10-25', title: 'Upper Body Power', type: 'Strength', duration: 60, calories: 450 },
-        { id: 2, date: '2023-10-24', title: 'HIIT Cardio', type: 'Cardio', duration: 45, calories: 500 }
-    ],
-    meals: [
-        { id: 1, name: 'Oatmeal & Berries', calories: 350 },
-        { id: 2, name: 'Grilled Chicken Salad', calories: 450 },
-        { id: 3, name: 'Protein Shake', calories: 180 }
-    ],
-    weightHistory: [180, 178, 177, 176, 175, 174, 173] 
+    user: {}, // currently only used by profile form; name/email in UI come from EJS currentUser
+    workouts: (window.MEMBER_BOOTSTRAP && window.MEMBER_BOOTSTRAP.workouts) || [],
+    meals: (window.MEMBER_BOOTSTRAP && window.MEMBER_BOOTSTRAP.meals) || [],
+    weightHistory: [180, 178, 177, 176, 175, 174, 173] // demo weight trend for chart
 };
 
+// Main entrypoint when the member dashboard has loaded
 document.addEventListener('DOMContentLoaded', () => {
-    initTheme(); 
-    checkAuth();
-    loadData();
-    initNavigation();
-    initModals();
-    initForms();
-    renderAll();
-    initAnimations();
+    initTheme();      // Dark / light theme toggle
+    loadData();       // Initialize UI with server-provided data
+    initNavigation(); // Sidebar navigation logic
+    initModals();     // Open/close workout + meal modals
+    initForms();      // Hook up workout and profile forms
+    renderAll();      // Initial render of tables/cards
+    initAnimations(); // Scroll-based animations and charts
 });
 
 /* =========================================
@@ -63,26 +60,16 @@ function initTheme() {
 }
 
 /* =========================================
-   AUTH & DATA
+   DATA HELPERS (server-synced)
    ========================================= */
-function checkAuth() {
-    if (!localStorage.getItem('aura_member_logged_in')) {
-        localStorage.setItem('aura_member_logged_in', 'true');
-    }
-}
-
 function loadData() {
-    const w = localStorage.getItem('aura_workouts');
-    const m = localStorage.getItem('aura_meals');
-    const u = localStorage.getItem('aura_user_info');
-    if (w) APP.workouts = JSON.parse(w);
-    if (m) APP.meals = JSON.parse(m);
-    if (u) APP.user = JSON.parse(u);
+    // Initial data is already in APP via window.MEMBER_BOOTSTRAP
+    renderAll();
 }
 
 function saveData() {
-    localStorage.setItem('aura_workouts', JSON.stringify(APP.workouts));
-    localStorage.setItem('aura_meals', JSON.stringify(APP.meals));
+    // Left for compatibility; server is source of truth now.
+    // When APP is updated from responses, just re-render.
     renderAll();
 }
 
@@ -155,7 +142,7 @@ function animateNutritionRing() {
    RENDERING
    ========================================= */
 function renderAll() {
-    document.querySelectorAll('.user-name').forEach(el => el.textContent = APP.user.name);
+    // document.querySelectorAll('.user-name').forEach(el => el.textContent = APP.user.name);
     
     const mealsList = document.getElementById('meals-list');
     if (mealsList) {
@@ -165,7 +152,7 @@ function renderAll() {
             totalCals += parseInt(m.calories);
             const div = document.createElement('div');
             div.className = 'meal-card';
-            div.innerHTML = `<h4>${m.name}</h4><p>${m.calories} kcal</p>`;
+            div.innerHTML = `<h4>${m.name}</h4><p>${m.calories} kcal</p><button class="btn-sm btn-danger" data-meal-id="${m._id || ''}"><i class="fa-solid fa-trash"></i></button>`;
             mealsList.appendChild(div);
         });
         const nutriEl = document.getElementById('nutri-total-cals');
@@ -175,8 +162,16 @@ function renderAll() {
     const tbody = document.querySelector('#workouts-table tbody');
     if (tbody) {
         tbody.innerHTML = '';
-        APP.workouts.forEach((w, i) => {
-            tbody.innerHTML += `<tr><td>${w.date}</td><td>${w.title}</td><td>${w.type}</td><td>${w.duration}m</td><td>${w.calories}</td><td><button class="btn-sm btn-danger" onclick="deleteWorkout(${i})"><i class="fa-solid fa-trash"></i></button></td></tr>`;
+        APP.workouts.forEach((w) => {
+            const dateStr = w.date ? new Date(w.date).toLocaleDateString() : '';
+            tbody.innerHTML += `<tr>
+                <td>${dateStr}</td>
+                <td>${w.title}</td>
+                <td>${w.type}</td>
+                <td>${w.duration}m</td>
+                <td>${w.calories}</td>
+                <td><button class="btn-sm btn-danger" onclick="deleteWorkout('${w._id || ''}')"><i class="fa-solid fa-trash"></i></button></td>
+            </tr>`;
         });
     }
     
@@ -322,12 +317,28 @@ function initModals() {
 function initForms() {
     document.getElementById('form-workout')?.addEventListener('submit', (e) => {
         e.preventDefault();
-        APP.workouts.unshift({ id: Date.now(), date: new Date().toLocaleDateString(), title: document.getElementById('w-title').value, type: 'Strength', duration: 45, calories: 300 });
-        saveData();
-        document.getElementById('modal-workout').classList.remove('active');
+        const payload = {
+            title: document.getElementById('w-title').value,
+            type: document.getElementById('w-type').value,
+            duration: document.getElementById('w-duration').value,
+            calories: document.getElementById('w-calories').value
+        };
+        fetch('/member/workouts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.workouts) {
+                APP.workouts = data.workouts;
+                renderAll();
+            }
+            document.getElementById('modal-workout').classList.remove('active');
+        });
     });
     
-    // Profile Form Logic (Already works via existing render/save functions)
+    // Profile Form Logic (still local-only for now)
     const pForm = document.getElementById('profile-form');
     if (pForm) {
         pForm.addEventListener('submit', (e) => {
@@ -340,4 +351,33 @@ function initForms() {
     }
 }
 
-window.deleteWorkout = (i) => { if(confirm('Delete?')) { APP.workouts.splice(i, 1); saveData(); }};
+window.deleteWorkout = (id) => {
+    if (!id) return;
+    if (confirm('Delete this workout?')) {
+        fetch(`/member/workouts/${id}`, { method: 'DELETE' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.workouts) {
+                    APP.workouts = data.workouts;
+                    renderAll();
+                }
+            });
+    }
+};
+
+document.addEventListener('click', (e) => {
+    if (e.target.closest && e.target.closest('[data-meal-id]')) {
+        const btn = e.target.closest('[data-meal-id]');
+        const id = btn.getAttribute('data-meal-id');
+        if (id && confirm('Delete this meal?')) {
+            fetch(`/member/meals/${id}`, { method: 'DELETE' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.meals) {
+                        APP.meals = data.meals;
+                        renderAll();
+                    }
+                });
+        }
+    }
+});

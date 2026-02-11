@@ -44,10 +44,16 @@
                     <button type="button" class="role-btn" data-role="admin">Admin</button>
                 </div>
                 
-                <!-- Error Message Container -->
-                <div id="error-msg" class="error-banner hidden">
+                <!-- Flash Messages -->
+                <% if (success && success.length) { %>
+                    <div class="error-banner success-banner">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span><%= success[0] %></span>
+                    </div>
+                <% } %>
+                <div id="error-msg" class="error-banner <%= error && error.length ? '' : 'hidden' %>">
                     <i class="fa-solid fa-circle-exclamation"></i>
-                    <span>Invalid credentials.</span>
+                    <span><%= error && error.length ? error[0] : 'Invalid credentials.' %></span>
                 </div>
 
                 <input type="hidden" name="role" id="role" value="member">

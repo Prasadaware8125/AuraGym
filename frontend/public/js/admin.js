@@ -2,25 +2,37 @@
 
 /**
  * AURA GYM ADMIN DASHBOARD LOGIC
- * Features: Animations, Advanced Members Grid, Workouts Viz
+ * Frontend controller for the admin/trainer dashboard:
+ * - Uses members injected from the server (window.ADMIN_MEMBERS)
+ * - Renders the members table and supports filtering/search
+ * - Handles animations, charts, and logout
  */
 
+// Global state for admin dashboard
 const ADMIN_STATE = {
-    members: [
-        { id: 101, name: 'Alex Johnson', email: 'alex@example.com', plan: 'Pro', status: 'Active', joined: '2023-01-15' },
-        { id: 102, name: 'Sarah Connor', email: 'sarah@example.com', plan: 'Elite', status: 'Active', joined: '2023-02-20' },
-        { id: 103, name: 'Mike Ross', email: 'mike@example.com', plan: 'Free', status: 'Inactive', joined: '2022-11-05' },
-        { id: 104, name: 'Jessica Pearson', email: 'jessica@pearson.com', plan: 'Elite', status: 'Active', joined: '2023-03-10' },
-        { id: 105, name: 'Harvey Specter', email: 'harvey@specter.com', plan: 'Pro', status: 'Active', joined: '2023-01-22' },
-        { id: 106, name: 'Louis Litt', email: 'louis@litt.com', plan: 'Pro', status: 'Active', joined: '2023-04-01' }
-    ],
+    members: (window.ADMIN_MEMBERS || []).map(m => ({
+        id: m._id,
+        name: m.username,
+        email: m.email,
+        plan: 'Standard',
+        status: 'Active',
+        joined: m.createdAt ? new Date(m.createdAt).toLocaleDateString() : ''
+    })),
     stats: {
-        totalMembers: 1245,
-        totalWorkouts: 8932,
-        activeSubs: 982
+        totalMembers: (window.ADMIN_MEMBERS || []).length,
+        totalWorkouts: 0,
+        activeSubs: (window.ADMIN_MEMBERS || []).length
     },
     activeFilter: 'all'
 };
+
+// Fallback demo data if no members yet
+if (!ADMIN_STATE.members.length) {
+    ADMIN_STATE.members = [
+        { id: 101, name: 'Alex Johnson', email: 'alex@example.com', plan: 'Pro', status: 'Active', joined: '2023-01-15' },
+        { id: 102, name: 'Sarah Connor', email: 'sarah@example.com', plan: 'Elite', status: 'Active', joined: '2023-02-20' }
+    ];
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     checkAdminAuth();
@@ -71,12 +83,16 @@ function initNavigation() {
         sidebarToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
     }
 
-    document.getElementById('logout-btn').addEventListener('click', () => {
-        if(confirm('Logout of Admin Dashboard?')) {
-            localStorage.removeItem('aura_admin_session');
-            window.location.href = 'index.html';
-        }
-    });
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (confirm('Logout of Admin Dashboard?')) {
+                // Let the server handle the real logout
+                window.location.href = '/logout';
+            }
+        });
+    }
 }
 
 function initAnimations() {
